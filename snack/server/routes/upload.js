@@ -47,8 +47,11 @@ router.post('/image', protect, (req, res) => {
     if (err) return res.status(400).json({ message: err.message })
     if (!req.file) return res.status(400).json({ message: 'No file uploaded' })
 
-    // Return the public URL path
-    res.json({ url: `/uploads/${req.file.filename}` })
+    // Return the public URL path (or full URL for production)
+    const fileUrl = process.env.SERVER_URL 
+      ? `${process.env.SERVER_URL}/uploads/${req.file.filename}`
+      : `/uploads/${req.file.filename}`
+    res.json({ url: fileUrl })
   })
 })
 
