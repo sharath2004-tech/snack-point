@@ -33,6 +33,7 @@ import {
 } from 'recharts'
 import { useAuth } from '../../context/AuthContext'
 import api from '../../utils/api'
+import { getImageUrl } from '../../utils/imageUrl'
 
 const PIE_COLORS = ['#F59E0B', '#3B82F6', '#10B981', '#6B7280']
 
@@ -464,8 +465,8 @@ export default function AdminDashboard() {
                       style={{ background: '#FFFFFF', border: '1px solid rgba(0,150,200,0.18)', boxShadow: '0 2px 12px rgba(0,150,200,0.08)' }}>
                       <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-[#111]">
                         {item.image
-                          ? <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                          : <div className="w-full h-full flex items-center justify-center text-xl">🍽️</div>}
+                          ? <img src={getImageUrl(item.image)} alt={item.name} className="w-full h-full object-cover" />
+                          ? <div className="w-full h-full flex items-center justify-center text-xl">🍽️</div>}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="font-semibold text-[#1C1C2E] text-sm truncate">{item.name}</div>
@@ -583,7 +584,7 @@ export default function AdminDashboard() {
                   <div className="flex gap-2 items-start">
                     <div className="w-16 h-16 rounded-xl flex-shrink-0 flex items-center justify-center overflow-hidden"
                       style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(0,150,200,0.18)' }}>
-                      {form.image ? <img src={form.image} alt="preview" className="w-full h-full object-cover" />
+                      {form.image ? <img src={getImageUrl(form.image)} alt="preview" className="w-full h-full object-cover" />
                         : <ImagePlus size={22} className="text-gray-600" />}
                     </div>
                     <div className="flex-1 flex flex-col gap-2">

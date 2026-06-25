@@ -101,7 +101,7 @@ export default function MenuCard({ item }) {
         <div className="relative w-28 flex-shrink-0 overflow-hidden bg-blue-50">
           {item.image ? (
             <img
-              src={item.image}
+              src={getImageUrl(item.image)}
               alt={item.name}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               loading="lazy"
@@ -139,7 +139,7 @@ export default function MenuCard({ item }) {
           <div className="relative h-44 overflow-hidden bg-blue-50">
           {item.image ? (
             <img
-              src={item.image}
+              src={getImageUrl(item.image)}
               alt={item.name}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               loading="lazy"

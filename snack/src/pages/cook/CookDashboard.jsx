@@ -17,6 +17,7 @@ import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import api from '../../utils/api'
+import { getImageUrl } from '../../utils/imageUrl'
 
 const STATUS_OPTIONS = [
   { value: 'pending', label: 'Pending', color: '#F59E0B' },
@@ -351,7 +352,7 @@ export default function CookDashboard() {
                 <div key={item._id} className="p-4 rounded-2xl" style={{ background: '#FFFFFF', border: '1px solid rgba(0,150,200,0.18)' }}>
                   {item.image && (
                     <div className="h-32 rounded-xl overflow-hidden mb-3 bg-blue-50">
-                      <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                      <img src={getImageUrl(item.image)} alt={item.name} className="w-full h-full object-cover" />
                     </div>
                   )}
                   <div className="flex items-start justify-between gap-2 mb-2">
@@ -424,7 +425,7 @@ export default function CookDashboard() {
                       style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
                     >
                       {form.image ? (
-                        <img src={form.image} alt="preview" className="w-full h-full object-cover" />
+                        <img src={getImageUrl(form.image)} alt="preview" className="w-full h-full object-cover" />
                       ) : (
                         <ImagePlus size={22} className="text-gray-600" />
                       )}
