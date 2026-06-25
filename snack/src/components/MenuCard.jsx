@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { Minus, Plus, ShoppingCart } from 'lucide-react'
 import { useCart } from '../context/CartContext'
+import { getImageUrl } from '../utils/imageUrl'
 
 const CATEGORY_EMOJI = {
   Burgers: '🍔', Wraps: '🌯', Fries: '🍟', Drinks: '🥤', Snacks: '🧆', Desserts: '🍨',
