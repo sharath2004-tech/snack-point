@@ -12,6 +12,9 @@ dotenv.config()
 
 const app = express()
 
+// ── Trust proxy (required for Render) ──────────────────────
+app.set('trust proxy', 1)
+
 // ── Security headers ──────────────────────────────────────
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }))
 
@@ -24,11 +27,13 @@ const limiter = rateLimit({
   max: 200,
   standardHeaders: true,
   legacyHeaders: false,
+  trustProxy: true,
   message: { message: 'Too many requests, please try again later.' },
 })
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 20,
+  trustProxy: true,
   message: { message: 'Too many auth attempts, please try again in 15 minutes.' },
 })
 app.use('/api/', limiter)
@@ -38,6 +43,7 @@ app.use('/api/auth', authLimiter)
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
+  'https://snack-point-wheat.vercel.app',
   process.env.CLIENT_URL,
 ].filter(Boolean)
 
