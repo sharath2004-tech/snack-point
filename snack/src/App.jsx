@@ -1,17 +1,19 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import { Toaster } from "react-hot-toast"
+import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom"
+import CartSidebar from "./components/CartSidebar"
+import FloatingCartBar from "./components/FloatingCartBar"
+import Navbar from "./components/Navbar"
+import ProtectedRoute from "./components/ProtectedRoute"
 import { AuthProvider } from "./context/AuthContext"
 import { CartProvider } from "./context/CartContext"
-import ProtectedRoute from "./components/ProtectedRoute"
-import Navbar from "./components/Navbar"
 import Home from "./pages/Home"
-import Menu from "./pages/Menu"
 import Login from "./pages/Login"
-import Register from "./pages/Register"
-import OrderStatus from "./pages/OrderStatus"
+import Menu from "./pages/Menu"
 import OrderHistory from "./pages/OrderHistory"
-import CookDashboard from "./pages/cook/CookDashboard"
+import OrderStatus from "./pages/OrderStatus"
+import Register from "./pages/Register"
 import AdminDashboard from "./pages/admin/AdminDashboard"
+import CookDashboard from "./pages/cook/CookDashboard"
 
 function App() {
   return (
@@ -57,6 +59,8 @@ function App() {
             } />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
+          <CartSidebar />
+          <FloatingCartBar />
         </CartProvider>
       </AuthProvider>
     </Router>

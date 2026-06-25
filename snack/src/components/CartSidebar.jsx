@@ -1,11 +1,11 @@
-import { motion, AnimatePresence } from 'framer-motion'
-import { X, Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react'
-import { useCart } from '../context/CartContext'
-import { useAuth } from '../context/AuthContext'
-import { useNavigate } from 'react-router-dom'
-import api from '../utils/api'
-import toast from 'react-hot-toast'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import { useCart } from '../context/CartContext'
+import api from '../utils/api'
 
 export default function CartSidebar() {
   const { items, isOpen, setIsOpen, removeItem, updateQuantity, clearCart, totalAmount } = useCart()
@@ -31,7 +31,7 @@ export default function CartSidebar() {
       clearCart()
       setIsOpen(false)
       toast.success(`Order placed! Token #${order.tokenNumber}`, { duration: 5000, icon: '🎉' })
-      navigate('/order-status')
+      navigate(`/order-status?token=${order.tokenNumber}`)
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to place order')
     } finally {
@@ -59,15 +59,15 @@ export default function CartSidebar() {
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             className="fixed right-0 top-0 h-full w-full max-w-sm z-[70] flex flex-col"
-            style={{ background: 'rgba(10,10,10,0.98)', borderLeft: '1px solid rgba(255,255,255,0.08)' }}
+            style={{ background: '#F0F8FF', borderLeft: '1px solid rgba(0,150,200,0.2)', boxShadow: '-4px 0 30px rgba(0,150,200,0.1)' }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-5 border-b border-white/10">
+            <div className="flex items-center justify-between p-5 border-b border-blue-100">
               <div className="flex items-center gap-2">
-                <ShoppingBag size={20} className="text-[#FF4500]" />
-                <h2 className="font-bold text-lg text-white">Your Order</h2>
+                <ShoppingBag size={20} className="text-[#00AEEF]" />
+                <h2 className="font-black text-lg text-[#1C1C2E]">Your Order</h2>
                 {items.length > 0 && (
-                  <span className="px-2 py-0.5 bg-[#FF4500] rounded-full text-xs font-bold text-white">
+                  <span className="px-2 py-0.5 bg-[#F07B25] rounded-full text-xs font-bold text-white">
                     {items.reduce((s, i) => s + i.quantity, 0)}
                   </span>
                 )}
@@ -78,8 +78,8 @@ export default function CartSidebar() {
                     <Trash2 size={16} />
                   </button>
                 )}
-                <button onClick={() => setIsOpen(false)} className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                  <X size={18} className="text-gray-300" />
+                <button onClick={() => setIsOpen(false)} className="p-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors">
+                  <X size={18} className="text-[#1C1C2E]" />
                 </button>
               </div>
             </div>
@@ -89,10 +89,10 @@ export default function CartSidebar() {
               <AnimatePresence>
                 {items.length === 0 ? (
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center h-full gap-4 py-16">
-                    <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center text-4xl">🍔</div>
-                    <p className="text-gray-400 text-sm">Your cart is empty</p>
+                    <div className="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center text-4xl">🍔</div>
+                    <p className="text-gray-500 text-sm font-semibold">Your cart is empty</p>
                     <button onClick={() => { setIsOpen(false); navigate('/menu') }}
-                      className="px-5 py-2 bg-[#FF4500] rounded-full text-sm font-semibold text-white hover:bg-[#FF6B35] transition-colors">
+                      className="px-5 py-2 bg-[#F07B25] rounded-full text-sm font-bold text-white hover:bg-[#FF9A50] transition-colors">
                       Browse Menu
                     </button>
                   </motion.div>
@@ -105,9 +105,9 @@ export default function CartSidebar() {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 30 }}
                       className="flex gap-3 p-3 rounded-xl"
-                      style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}
+                      style={{ background: '#FFFFFF', border: '1px solid rgba(0,150,200,0.15)' }}
                     >
-                      <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-white/5">
+                      <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-blue-50">
                         {item.image ? (
                           <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                         ) : (
@@ -115,16 +115,16 @@ export default function CartSidebar() {
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-white truncate">{item.name}</p>
-                        <p className="text-xs text-[#FF4500] font-bold mt-0.5">₹{item.price}</p>
+                        <p className="text-sm font-bold text-[#1C1C2E] truncate">{item.name}</p>
+                        <p className="text-xs text-[#F07B25] font-black mt-0.5">₹{item.price}</p>
                         <div className="flex items-center gap-2 mt-2">
                           <button onClick={() => updateQuantity(item._id, item.quantity - 1)}
-                            className="w-6 h-6 rounded-full bg-white/10 hover:bg-[#FF4500]/30 flex items-center justify-center transition-colors">
+                            className="w-6 h-6 rounded-full bg-blue-100 hover:bg-[#00AEEF]/20 flex items-center justify-center transition-colors text-[#00AEEF]">
                             <Minus size={10} />
                           </button>
-                          <span className="text-sm font-bold w-4 text-center">{item.quantity}</span>
+                          <span className="text-sm font-black w-4 text-center text-[#1C1C2E]">{item.quantity}</span>
                           <button onClick={() => updateQuantity(item._id, item.quantity + 1)}
-                            className="w-6 h-6 rounded-full bg-white/10 hover:bg-[#FF4500]/30 flex items-center justify-center transition-colors">
+                            className="w-6 h-6 rounded-full bg-blue-100 hover:bg-[#00AEEF]/20 flex items-center justify-center transition-colors text-[#00AEEF]">
                             <Plus size={10} />
                           </button>
                           <button onClick={() => removeItem(item._id)} className="ml-auto text-gray-600 hover:text-red-400 transition-colors">
@@ -132,7 +132,7 @@ export default function CartSidebar() {
                           </button>
                         </div>
                       </div>
-                      <div className="text-sm font-bold text-white self-start">
+                      <div className="text-sm font-black text-[#1C1C2E] self-start">
                         ₹{item.price * item.quantity}
                       </div>
                     </motion.div>
@@ -143,21 +143,21 @@ export default function CartSidebar() {
 
             {/* Footer */}
             {items.length > 0 && (
-              <div className="p-5 border-t border-white/10 space-y-4">
-                <div className="flex justify-between text-sm text-gray-400">
-                  <span>Subtotal</span><span className="text-white font-semibold">₹{totalAmount}</span>
+              <div className="p-5 border-t border-blue-100 space-y-4">
+                <div className="flex justify-between text-sm text-gray-500">
+                  <span>Subtotal</span><span className="text-[#1C1C2E] font-bold">₹{totalAmount}</span>
                 </div>
-                <div className="flex justify-between text-sm text-gray-400">
-                  <span>Taxes & Fees</span><span className="text-green-400 font-semibold">FREE</span>
+                <div className="flex justify-between text-sm text-gray-500">
+                  <span>Taxes & Fees</span><span className="text-green-500 font-bold">FREE</span>
                 </div>
-                <div className="flex justify-between font-bold text-white border-t border-white/10 pt-3">
-                  <span>Total</span><span className="text-[#FFB800] text-lg">₹{totalAmount}</span>
+                <div className="flex justify-between font-black text-[#1C1C2E] border-t border-blue-100 pt-3">
+                  <span>Total</span><span className="text-[#F07B25] text-lg">₹{totalAmount}</span>
                 </div>
                 <button
                   onClick={handlePlaceOrder}
                   disabled={placing}
                   className="w-full py-3.5 rounded-xl font-bold text-white text-sm transition-all disabled:opacity-60 disabled:cursor-not-allowed"
-                  style={{ background: placing ? '#555' : 'linear-gradient(135deg, #FF4500, #FF6B35)', boxShadow: '0 4px 20px rgba(255,69,0,0.35)' }}
+                  style={{ background: placing ? '#ccc' : 'linear-gradient(135deg, #F07B25, #FF9A50)', boxShadow: '0 4px 20px rgba(240,123,37,0.35)' }}
                 >
                   {placing ? 'Placing Order...' : `Place Order · ₹${totalAmount}`}
                 </button>

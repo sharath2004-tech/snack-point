@@ -1,9 +1,9 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Eye, EyeOff, Flame, ArrowRight, Check } from 'lucide-react'
-import { useAuth } from '../context/AuthContext'
+import { ArrowRight, Check, Eye, EyeOff, Flame } from 'lucide-react'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 export default function Register() {
   const [form, setForm] = useState({ name: '', email: '', password: '' })
@@ -30,9 +30,9 @@ export default function Register() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050505] flex items-center justify-center px-4 relative overflow-hidden py-10">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(255,184,0,0.1),transparent)]" />
-      <div className="absolute top-1/4 -right-20 w-64 h-64 rounded-full opacity-10 blur-3xl" style={{ background: '#FF4500' }} />
+    <div className="min-h-screen bg-[#E8F5FE] flex items-center justify-center px-4 relative overflow-hidden py-10">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(0,150,200,0.08),transparent)]" />
+      <div className="absolute top-1/4 -right-20 w-64 h-64 rounded-full opacity-10 blur-3xl" style={{ background: '#00AEEF' }} />
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -42,60 +42,60 @@ export default function Register() {
       >
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2.5">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#FF4500] to-[#FFB800] flex items-center justify-center shadow-xl shadow-orange-500/30">
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#F07B25] to-[#FF9A50] flex items-center justify-center shadow-xl shadow-orange-200">
               <Flame size={22} className="text-white" />
             </div>
             <span className="font-black text-2xl">
-              <span style={{ backgroundImage: 'linear-gradient(135deg,#FF4500,#FFB800)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Snack</span>
-              <span className="text-white"> Point</span>
+              <span style={{ backgroundImage: 'linear-gradient(135deg,#F07B25,#FF9A50)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Snack</span>
+              <span className="text-[#00AEEF]"> Point</span>
             </span>
           </Link>
         </div>
 
-        <div className="p-8 rounded-3xl" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.09)', backdropFilter: 'blur(20px)' }}>
+        <div className="p-8 rounded-3xl bg-white" style={{ border: '1px solid rgba(0,150,200,0.2)', boxShadow: '0 8px 40px rgba(0,150,200,0.12)' }}>
           <div className="mb-6">
-            <h1 className="text-2xl font-black text-white mb-1">Create your account</h1>
-            <p className="text-gray-400 text-sm">Join thousands of food lovers</p>
+            <h1 className="text-2xl font-black text-[#1C1C2E] mb-1">Create your account</h1>
+            <p className="text-gray-500 text-sm font-semibold">Join thousands of food lovers</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Full Name</label>
+              <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Full Name</label>
               <input
                 type="text"
                 value={form.name}
                 onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))}
                 placeholder="John Doe"
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#FF4500]/60 transition-all"
+                className="w-full bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 text-sm text-[#1C1C2E] placeholder-gray-400 focus:outline-none focus:border-[#00AEEF] transition-all"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Email</label>
+              <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Email</label>
               <input
                 type="email"
                 value={form.email}
                 onChange={(e) => setForm(f => ({ ...f, email: e.target.value }))}
                 placeholder="you@example.com"
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#FF4500]/60 transition-all"
+                className="w-full bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 text-sm text-[#1C1C2E] placeholder-gray-400 focus:outline-none focus:border-[#00AEEF] transition-all"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Password</label>
+              <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Password</label>
               <div className="relative">
                 <input
                   type={showPwd ? 'text' : 'password'}
                   value={form.password}
                   onChange={(e) => setForm(f => ({ ...f, password: e.target.value }))}
                   placeholder="Min. 6 characters"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-11 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#FF4500]/60 transition-all"
+                  className="w-full bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 pr-11 text-sm text-[#1C1C2E] placeholder-gray-400 focus:outline-none focus:border-[#00AEEF] transition-all"
                   required
                 />
                 <button type="button" onClick={() => setShowPwd(s => !s)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300">
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#F07B25]">
                   {showPwd ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
@@ -117,9 +117,9 @@ export default function Register() {
             </div>
 
             {/* Benefits */}
-            <div className="py-3 px-4 rounded-xl bg-white/3 border border-white/5">
+            <div className="py-3 px-4 rounded-xl bg-blue-50 border border-blue-100">
               {['Free account — no payment info needed', 'Real-time order tracking with token system', 'Order history & status updates'].map(b => (
-                <div key={b} className="flex items-center gap-2 text-xs text-gray-400 py-1">
+                <div key={b} className="flex items-center gap-2 text-xs text-gray-600 font-semibold py-1">
                   <Check size={12} className="text-green-400 flex-shrink-0" /> {b}
                 </div>
               ))}
@@ -129,7 +129,7 @@ export default function Register() {
               type="submit"
               disabled={loading}
               className="w-full py-3.5 rounded-xl font-bold text-white text-sm flex items-center justify-center gap-2 transition-all disabled:opacity-60"
-              style={{ background: 'linear-gradient(135deg, #FF4500, #FF6B35)', boxShadow: '0 4px 20px rgba(255,69,0,0.35)' }}
+              style={{ background: 'linear-gradient(135deg, #F07B25, #FF9A50)', boxShadow: '0 4px 20px rgba(240,123,37,0.35)' }}
             >
               {loading ? 'Creating Account...' : <><span>Create Account</span><ArrowRight size={16} /></>}
             </button>
@@ -137,7 +137,7 @@ export default function Register() {
 
           <p className="text-center text-gray-500 text-sm mt-5">
             Already have an account?{' '}
-            <Link to="/login" className="text-[#FF4500] hover:text-[#FF6B35] font-semibold transition-colors">
+            <Link to="/login" className="text-[#F07B25] hover:text-[#FF9A50] font-bold transition-colors">
               Sign in
             </Link>
           </p>

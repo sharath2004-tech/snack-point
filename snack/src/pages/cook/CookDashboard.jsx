@@ -162,26 +162,26 @@ export default function CookDashboard() {
   const preparingCount = orders.filter(o => o.status === 'preparing').length
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white">
+    <div className="min-h-screen bg-[#E8F5FE] text-[#1C1C2E]">
       {/* Topbar */}
-      <div className="sticky top-0 z-40 bg-black/90 backdrop-blur-xl border-b border-white/10">
+      <div className="sticky top-0 z-40 bg-white/98 backdrop-blur-xl border-b border-blue-100 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#FF4500] to-[#FFB800] flex items-center justify-center">
               <Flame size={15} className="text-white" />
             </div>
             <div>
-              <span className="font-bold text-white text-sm">Kitchen Dashboard</span>
+              <span className="font-bold text-[#1C1C2E] text-sm">Kitchen Dashboard</span>
               <span className="text-xs text-gray-500 ml-2">Welcome, {user?.name?.split(' ')[0]}</span>
             </div>
           </div>
           <div className="flex items-center gap-3">
             <button onClick={() => setAutoRefresh(a => !a)}
-              className={`p-2 rounded-lg text-xs flex items-center gap-1.5 transition-all ${autoRefresh ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-white/5 text-gray-500 border border-white/10'}`}>
+              className={`p-2 rounded-lg text-xs flex items-center gap-1.5 transition-all ${autoRefresh ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-blue-50 text-gray-500 border border-blue-200'}`}>
               <span className={`w-1.5 h-1.5 rounded-full ${autoRefresh ? 'bg-green-400 animate-pulse' : 'bg-gray-600'}`} />
               Auto
             </button>
-            <button onClick={fetchOrders} className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10">
+            <button onClick={fetchOrders} className="p-2 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors border border-blue-200">
               <RefreshCw size={15} className="text-gray-400" />
             </button>
             <button onClick={() => { logout(); navigate('/') }} className="p-2 rounded-lg text-red-400 hover:bg-red-500/10 transition-colors">
@@ -198,7 +198,7 @@ export default function CookDashboard() {
             { id: 'menu', label: 'Menu', icon: LayoutGrid, badge: null }].map(t => (
             <button key={t.id} onClick={() => setTab(t.id)}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all relative ${
-                tab === t.id ? 'text-white' : 'text-gray-400 hover:text-white bg-white/3 border border-white/10'
+                tab === t.id ? 'text-white' : 'text-gray-400 hover:text-white bg-blue-50 border border-blue-200'
               }`}
               style={tab === t.id ? { background: 'linear-gradient(135deg, #FF4500, #FF6B35)', boxShadow: '0 3px 12px rgba(255,69,0,0.3)' } : {}}>
               <t.icon size={15} />
@@ -225,7 +225,7 @@ export default function CookDashboard() {
               ].map(f => (
                 <button key={f.key} onClick={() => setStatusFilter(f.key)}
                   className={`flex-shrink-0 px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                    statusFilter === f.key ? 'bg-[#FF4500] text-white' : 'bg-white/5 text-gray-400 border border-white/10 hover:text-white'
+                    statusFilter === f.key ? 'bg-[#F07B25] text-white' : 'bg-white text-[#1C1C2E] border border-blue-200'
                   }`}>
                   {f.label}
                 </button>
@@ -247,7 +247,7 @@ export default function CookDashboard() {
                   const cfg = STATUS_OPTIONS.find(s => s.value === order.status)
                   return (
                     <motion.div key={order._id} layout initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.97 }}
-                      className="p-5 rounded-2xl" style={{ background: 'rgba(255,255,255,0.03)', border: `1px solid ${cfg.color}30` }}>
+                      className="p-5 rounded-2xl" style={{ background: '#FFFFFF', border: `1px solid ${cfg.color}30` }}>
                       <div className="flex items-start justify-between mb-3">
                         <div>
                           <span className="text-2xl font-black" style={{ color: cfg.color }}>#{order.tokenNumber}</span>
@@ -261,13 +261,13 @@ export default function CookDashboard() {
                       <div className="space-y-1 mb-4">
                         {order.items.map((item, i) => (
                           <div key={i} className="flex justify-between text-sm">
-                            <span className="text-gray-300">{item.name}</span>
+                            <span className="text-[#1C1C2E]">{item.name}</span>
                             <span className="text-gray-500">×{item.quantity}</span>
                           </div>
                         ))}
-                        <div className="border-t border-white/10 pt-2 flex justify-between text-sm font-bold">
+                        <div className="border-t border-blue-100 pt-2 flex justify-between text-sm font-bold">
                           <span className="text-white">Total</span>
-                          <span className="text-[#FFB800]">₹{order.totalAmount}</span>
+                          <span className="text-[#F07B25]">₹{order.totalAmount}</span>
                         </div>
                       </div>
 
@@ -317,19 +317,19 @@ export default function CookDashboard() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {menuItems.map(item => (
-                <div key={item._id} className="p-4 rounded-2xl" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}>
+                <div key={item._id} className="p-4 rounded-2xl" style={{ background: '#FFFFFF', border: '1px solid rgba(0,150,200,0.18)' }}>
                   {item.image && (
-                    <div className="h-32 rounded-xl overflow-hidden mb-3 bg-[#111]">
+                    <div className="h-32 rounded-xl overflow-hidden mb-3 bg-blue-50">
                       <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                     </div>
                   )}
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <div>
-                      <h3 className="font-bold text-white text-sm">{item.name}</h3>
+                      <h3 className="font-bold text-[#1C1C2E] text-sm">{item.name}</h3>
                       <p className="text-xs text-gray-500">{item.category} · ₹{item.price}</p>
                     </div>
                     <div className="flex gap-1">
-                      <button onClick={() => openEditForm(item)} className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all">
+                      <button onClick={() => openEditForm(item)} className="p-1.5 rounded-lg bg-white/5 hover:bg-blue-50 text-gray-500 hover:text-[#1C1C2E] transition-all">
                         <Pencil size={13} />
                       </button>
                       <button onClick={() => deleteItem(item._id)} className="p-1.5 rounded-lg bg-white/5 hover:bg-red-500/20 text-gray-400 hover:text-red-400 transition-all">
@@ -364,10 +364,10 @@ export default function CookDashboard() {
               className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50" onClick={() => setShowForm(false)} />
             <motion.div initial={{ opacity: 0, y: 30, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 30 }}
               className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg z-[60] p-6 rounded-2xl"
-              style={{ background: '#111', border: '1px solid rgba(255,255,255,0.1)' }}
+              style={{ background: '#F0F8FF', border: '1px solid rgba(255,255,255,0.1)' }}
               onClick={e => e.stopPropagation()}>
               <div className="flex items-center justify-between mb-5">
-                <h2 className="font-bold text-white">{editItem ? 'Edit Item' : 'Add New Item'}</h2>
+                <h2 className="font-bold text-[#1C1C2E]">{editItem ? 'Edit Item' : 'Add New Item'}</h2>
                 <button onClick={() => setShowForm(false)} className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400">
                   <X size={16} />
                 </button>
@@ -377,7 +377,7 @@ export default function CookDashboard() {
                   <div key={key}>
                     <label className="block text-xs text-gray-400 mb-1">{label}</label>
                     <input type={type} value={form[key]} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#FF4500]/60 transition-all" />
+                      className="w-full bg-blue-50 border border-blue-200 rounded-lg px-3 py-2.5 text-sm text-[#1C1C2E] focus:outline-none focus:border-[#F07B25] transition-all" />
                   </div>
                 ))}
 
@@ -401,7 +401,7 @@ export default function CookDashboard() {
                     <div className="flex-1 flex flex-col gap-2">
                       <button type="button" onClick={() => fileInputRef.current?.click()} disabled={uploading}
                         className="w-full flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-semibold transition-all disabled:opacity-50"
-                        style={{ background: 'rgba(255,69,0,0.12)', border: '1px solid rgba(255,69,0,0.35)', color: '#FF6B35' }}
+                        style={{ background: 'rgba(240,123,37,0.1)', border: '1px solid rgba(240,123,37,0.35)', color: '#F07B25' }}
                       >
                         <ImagePlus size={14} />
                         {uploading ? 'Uploading…' : 'Upload Photo'}
@@ -411,7 +411,7 @@ export default function CookDashboard() {
                         placeholder="or paste image URL"
                         value={form.image}
                         onChange={e => setForm(f => ({ ...f, image: e.target.value }))}
-                        className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-[#FF4500]/60 transition-all"
+                        className="w-full bg-blue-50 border border-blue-200 rounded-lg px-3 py-2 text-xs text-[#1C1C2E] placeholder-gray-400 focus:outline-none focus:border-[#F07B25] transition-all"
                       />
                     </div>
                   </div>
@@ -421,24 +421,24 @@ export default function CookDashboard() {
                   <div key={key}>
                     <label className="block text-xs text-gray-400 mb-1">{label}</label>
                     <input type={type} value={form[key]} onChange={e => setForm(f => ({ ...f, [key]: +e.target.value }))}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#FF4500]/60 transition-all" />
+                      className="w-full bg-blue-50 border border-blue-200 rounded-lg px-3 py-2.5 text-sm text-[#1C1C2E] focus:outline-none focus:border-[#F07B25] transition-all" />
                   </div>
                 ))}
                 <div>
                   <label className="block text-xs text-gray-400 mb-1">Category</label>
                   <select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))}
-                    className="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none">
+                    className="w-full bg-blue-50 border border-blue-200 rounded-lg px-3 py-2.5 text-sm text-[#1C1C2E] focus:outline-none">
                     {CATEGORIES.map(c => <option key={c}>{c}</option>)}
                   </select>
                 </div>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" checked={form.isVeg} onChange={e => setForm(f => ({ ...f, isVeg: e.target.checked }))}
                     className="w-4 h-4 accent-green-500" />
-                  <span className="text-sm text-gray-300">Vegetarian</span>
+                  <span className="text-sm text-[#1C1C2E]">Vegetarian</span>
                 </label>
               </div>
               <div className="flex gap-3 mt-5">
-                <button onClick={() => setShowForm(false)} className="flex-1 py-2.5 rounded-xl text-sm text-gray-400 bg-white/5 border border-white/10">
+                <button onClick={() => setShowForm(false)} className="flex-1 py-2.5 rounded-xl text-sm text-gray-500 bg-blue-50 border border-blue-200">
                   Cancel
                 </button>
                 <button onClick={saveItem} disabled={saving}
@@ -454,3 +454,5 @@ export default function CookDashboard() {
     </div>
   )
 }
+
+

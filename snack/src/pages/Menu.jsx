@@ -1,11 +1,11 @@
-import { useState, useEffect, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Search, SlidersHorizontal, X } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Search, X } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { useSearchParams } from 'react-router-dom'
 import MenuCard from '../components/MenuCard'
 import { useCart } from '../context/CartContext'
 import api from '../utils/api'
-import toast from 'react-hot-toast'
 
 const CATEGORIES = ['All', 'Burgers', 'Wraps', 'Fries', 'Drinks', 'Snacks', 'Desserts']
 
@@ -48,23 +48,23 @@ export default function Menu() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050505] pt-20">
+    <div className="min-h-screen bg-[#E8F5FE] pt-20">
       {/* Header */}
-      <div className="border-b border-white/10 bg-black/40 backdrop-blur-xl sticky top-16 z-30">
+      <div className="border-b border-blue-100 bg-white/90 backdrop-blur-xl sticky top-16 z-30 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col sm:flex-row gap-4">
             {/* Search */}
             <div className="relative flex-1 max-w-md">
-              <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500" />
+              <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
                 placeholder="Search for burgers, fries, drinks..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-10 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#FF4500]/60 focus:bg-white/8 transition-all"
+                className="w-full bg-blue-50 border border-blue-200 rounded-xl pl-10 pr-10 py-2.5 text-sm text-[#1C1C2E] placeholder-gray-400 focus:outline-none focus:border-[#00AEEF] transition-all"
               />
               {search && (
-                <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white">
+                <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#F07B25]">
                   <X size={14} />
                 </button>
               )}
@@ -76,10 +76,10 @@ export default function Menu() {
                 <button
                   key={cat}
                   onClick={() => handleCategoryChange(cat)}
-                  className={`flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
+                  className={`flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
                     activeCategory === cat
-                      ? 'bg-[#FF4500] text-white shadow-lg shadow-orange-500/30'
-                      : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-white/10'
+                      ? 'bg-[#F07B25] text-white shadow-md shadow-orange-200'
+                      : 'bg-blue-50 text-[#1C1C2E] hover:bg-blue-100 border border-blue-200'
                   }`}
                 >
                   <span>{CATEGORY_EMOJI[cat]}</span>
@@ -96,7 +96,7 @@ export default function Menu() {
         {/* Results header */}
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-xl font-black text-white">
+            <h1 className="text-xl font-black text-[#1C1C2E]">
               {activeCategory === 'All' ? "Today's Menu" : `${CATEGORY_EMOJI[activeCategory]} ${activeCategory}`}
             </h1>
             {!loading && (
@@ -112,7 +112,7 @@ export default function Menu() {
               animate={{ opacity: 1, scale: 1 }}
               onClick={() => setIsOpen(true)}
               className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-white transition-all"
-              style={{ background: 'linear-gradient(135deg, #FF4500, #FF6B35)', boxShadow: '0 4px 15px rgba(255,69,0,0.3)' }}
+              style={{ background: 'linear-gradient(135deg, #F07B25, #FF9A50)', boxShadow: '0 4px 15px rgba(240,123,37,0.35)' }}
             >
               🛒 View Cart ({totalItems})
             </motion.button>
@@ -123,7 +123,7 @@ export default function Menu() {
         {loading && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {Array.from({ length: 8 }, (_, i) => (
-              <div key={i} className="h-72 rounded-2xl animate-pulse" style={{ background: 'rgba(255,255,255,0.04)' }} />
+              <div key={i} className="h-72 rounded-2xl animate-pulse bg-blue-100" />
             ))}
           </div>
         )}
@@ -142,13 +142,13 @@ export default function Menu() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
             className="flex flex-col items-center justify-center py-24 gap-4">
             <div className="text-6xl">🔍</div>
-            <h3 className="text-xl font-bold text-white">No items found</h3>
-            <p className="text-gray-400 text-sm text-center max-w-xs">
+            <h3 className="text-xl font-black text-[#1C1C2E]">No items found</h3>
+            <p className="text-gray-500 text-sm text-center max-w-xs">
               {search ? `No results for "${search}". Try a different search.` : 'No items available in this category today.'}
             </p>
             {(search || activeCategory !== 'All') && (
               <button onClick={() => { setSearch(''); setActiveCategory('All'); setSearchParams({}) }}
-                className="px-5 py-2 bg-[#FF4500] rounded-full text-sm font-semibold text-white hover:bg-[#FF6B35] transition-colors">
+                className="px-5 py-2 bg-[#F07B25] rounded-full text-sm font-bold text-white hover:bg-[#FF9A50] transition-colors">
                 Clear Filters
               </button>
             )}
