@@ -466,7 +466,7 @@ export default function AdminDashboard() {
                       <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-[#111]">
                         {item.image
                           ? <img src={getImageUrl(item.image)} alt={item.name} className="w-full h-full object-cover" />
-                          ? <div className="w-full h-full flex items-center justify-center text-xl">🍽️</div>}
+                          : <div className="w-full h-full flex items-center justify-center text-xl">🍽️</div>}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="font-semibold text-[#1C1C2E] text-sm truncate">{item.name}</div>
