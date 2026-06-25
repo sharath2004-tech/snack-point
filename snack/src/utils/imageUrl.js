@@ -1,24 +1,33 @@
 /**
- * Construct full image URL for menu item images
- * Handles both relative paths and full URLs
+ * Construct full image URL for menu item images.
+ * Supports full URLs and relative upload paths in both dev and production.
  */
 export const getImageUrl = (imagePath) => {
   if (!imagePath) return null
-  
-  // If already a full URL (http:// or https://), return as-is
-  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
-    return imagePath
+
+  const rawPath = String(imagePath).trim()
+
+  // If already a full URL, return as-is.
+  if (rawPath.startsWith('http://') || rawPath.startsWith('https://')) {
+    return rawPath
   }
-  
-  // Get API base URL from environment or default to /api
-  const apiBase = import.meta.env.VITE_API_URL || '/api'
-  
-  // Remove /api from the end to get server base URL
+
+  // Normalize separators from Windows-style stored paths.
+  const normalized = rawPath.replace(/\\/g, '/')
+
+  // Prefer configured API URL. In production fallback to Render backend.
+  const fallbackApiBase = import.meta.env.DEV
+    ? 'http://localhost:5000/api'
+    : 'https://snack-point.onrender.com/api'
+  const apiBase = import.meta.env.VITE_API_URL || fallbackApiBase
   const serverBase = apiBase.replace(/\/api\/?$/, '')
-  
-  // Ensure imagePath starts with /
-  const path = imagePath.startsWith('/') ? imagePath : `/${imagePath}`
-  
-  // Construct full URL
+
+  let path = normalized.startsWith('/') ? normalized : `/${normalized}`
+
+  // Handle paths accidentally stored with /api prefix.
+  if (path.startsWith('/api/uploads/')) {
+    path = path.replace(/^\/api/, '')
+  }
+
   return `${serverBase}${path}`
 }
