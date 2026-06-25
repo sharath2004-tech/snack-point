@@ -27,13 +27,11 @@ const limiter = rateLimit({
   max: 200,
   standardHeaders: true,
   legacyHeaders: false,
-  trustProxy: true,
   message: { message: 'Too many requests, please try again later.' },
 })
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 20,
-  trustProxy: true,
   message: { message: 'Too many auth attempts, please try again in 15 minutes.' },
 })
 app.use('/api/', limiter)
