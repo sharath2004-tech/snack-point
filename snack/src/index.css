@@ -56,3 +56,57 @@ input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin
 
 ::selection { background: rgba(240, 123, 37, 0.25); color: #1C1C2E; }
 
+/* Toast animations - slide from bottom */
+@keyframes slideInUp {
+  from {
+    transform: translate3d(0, 100%, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutDown {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  to {
+    transform: translate3d(0, 100%, 0);
+    opacity: 0;
+  }
+}
+
+/* Override react-hot-toast default animations */
+[data-sonner-toast],
+[data-sonner-toast][data-mounted],
+div[role="status"],
+div[role="alert"] {
+  animation: slideInUp 0.35s cubic-bezier(0.21, 1.02, 0.73, 1) !important;
+}
+
+[data-sonner-toast][data-removing],
+div[data-removed="true"] {
+  animation: slideOutDown 0.25s ease-in forwards !important;
+}
+
+/* Specific overrides for bottom-center toasts */
+[data-position="bottom-center"] > div,
+.react-hot-toast-bottom-center > div {
+  animation: slideInUp 0.35s cubic-bezier(0.21, 1.02, 0.73, 1);
+}
+
+/* Toast slide animation class */
+.react-hot-toast-slide {
+  animation: slideInUp 0.35s cubic-bezier(0.21, 1.02, 0.73, 1);
+}
+
+/* Smooth exit animation on dismiss/swipe */
+[data-sonner-toast][data-swiping="true"],
+div[style*="transform: translateY"] {
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out !important;
+}
+
+

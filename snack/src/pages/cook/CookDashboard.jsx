@@ -271,29 +271,60 @@ export default function CookDashboard() {
                         </div>
                       </div>
 
-                      {/* Action buttons */}
-                      <div className="flex gap-2">
-                        {order.status === 'pending' && (
-                          <button onClick={() => updateOrderStatus(order._id, 'preparing')}
-                            className="flex-1 py-2 rounded-lg text-xs font-bold text-white flex items-center justify-center gap-1.5"
-                            style={{ background: 'rgba(59,130,246,0.2)', border: '1px solid rgba(59,130,246,0.4)', color: '#3B82F6' }}>
-                            <ChefHat size={13} /> Start Preparing
-                          </button>
-                        )}
-                        {order.status === 'preparing' && (
-                          <button onClick={() => updateOrderStatus(order._id, 'ready')}
-                            className="flex-1 py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5"
-                            style={{ background: 'rgba(16,185,129,0.2)', border: '1px solid rgba(16,185,129,0.4)', color: '#10B981' }}>
-                            <Check size={13} /> Mark Ready
-                          </button>
-                        )}
-                        {order.status === 'ready' && (
-                          <button onClick={() => updateOrderStatus(order._id, 'completed')}
-                            className="flex-1 py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5"
-                            style={{ background: 'rgba(107,114,128,0.15)', border: '1px solid rgba(107,114,128,0.3)', color: '#9CA3AF' }}>
-                            <Package size={13} /> Mark Collected
-                          </button>
-                        )}
+                      {/* Status progression flow */}
+                      <div className="flex items-center gap-2">
+                        {/* Pending → Preparing */}
+                        <button
+                          onClick={() => order.status === 'pending' && updateOrderStatus(order._id, 'preparing')}
+                          disabled={order.status !== 'pending'}
+                          className={`flex-1 py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+                            order.status === 'pending'
+                              ? 'bg-[#3B82F6] text-white hover:bg-[#2563EB] cursor-pointer'
+                              : order.status === 'preparing' || order.status === 'ready' || order.status === 'completed'
+                              ? 'bg-green-500/10 text-green-600 border border-green-500/20 cursor-not-allowed'
+                              : 'bg-gray-100 text-gray-400 border border-gray-200 cursor-not-allowed'
+                          }`}>
+                          {order.status === 'pending' ? <ChefHat size={13} /> : <Check size={13} />}
+                          {order.status === 'pending' ? 'Start' : 'Started'}
+                        </button>
+
+                        <div className={`w-3 h-[2px] transition-colors ${
+                          order.status === 'preparing' || order.status === 'ready' || order.status === 'completed' ? 'bg-green-500' : 'bg-gray-300'
+                        }`} />
+
+                        {/* Preparing → Ready */}
+                        <button
+                          onClick={() => order.status === 'preparing' && updateOrderStatus(order._id, 'ready')}
+                          disabled={order.status !== 'preparing'}
+                          className={`flex-1 py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+                            order.status === 'preparing'
+                              ? 'bg-[#10B981] text-white hover:bg-[#059669] cursor-pointer'
+                              : order.status === 'ready' || order.status === 'completed'
+                              ? 'bg-green-500/10 text-green-600 border border-green-500/20 cursor-not-allowed'
+                              : 'bg-gray-100 text-gray-400 border border-gray-200 cursor-not-allowed'
+                          }`}>
+                          {order.status === 'preparing' ? <Flame size={13} /> : <Check size={13} />}
+                          {order.status === 'preparing' ? 'Ready' : order.status === 'ready' || order.status === 'completed' ? 'Ready' : 'Ready'}
+                        </button>
+
+                        <div className={`w-3 h-[2px] transition-colors ${
+                          order.status === 'ready' || order.status === 'completed' ? 'bg-green-500' : 'bg-gray-300'
+                        }`} />
+
+                        {/* Ready → Completed */}
+                        <button
+                          onClick={() => order.status === 'ready' && updateOrderStatus(order._id, 'completed')}
+                          disabled={order.status !== 'ready'}
+                          className={`flex-1 py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+                            order.status === 'ready'
+                              ? 'bg-[#F07B25] text-white hover:bg-[#E06915] cursor-pointer'
+                              : order.status === 'completed'
+                              ? 'bg-green-500/10 text-green-600 border border-green-500/20 cursor-not-allowed'
+                              : 'bg-gray-100 text-gray-400 border border-gray-200 cursor-not-allowed'
+                          }`}>
+                          {order.status === 'completed' ? <Check size={13} /> : <Package size={13} />}
+                          {order.status === 'completed' ? 'Done' : 'Collect'}
+                        </button>
                       </div>
                     </motion.div>
                   )

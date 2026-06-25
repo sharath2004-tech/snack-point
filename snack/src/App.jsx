@@ -21,14 +21,43 @@ function App() {
       <AuthProvider>
         <CartProvider>
           <Toaster
-            position="top-right"
+            position="bottom-center"
+            reverseOrder={false}
+            gutter={8}
+            containerClassName=""
+            containerStyle={{
+              bottom: 80,
+            }}
             toastOptions={{
+              duration: 3000,
+              className: 'react-hot-toast-slide',
               style: {
                 background: "#141414",
                 color: "#fff",
                 border: "1px solid rgba(255,255,255,0.1)",
                 borderRadius: "12px",
                 fontSize: "14px",
+                padding: "12px 16px",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                maxWidth: "400px",
+              },
+              success: {
+                iconTheme: {
+                  primary: '#10B981',
+                  secondary: '#fff',
+                },
+                style: {
+                  border: "1px solid rgba(16, 185, 129, 0.2)",
+                },
+              },
+              error: {
+                iconTheme: {
+                  primary: '#EF4444',
+                  secondary: '#fff',
+                },
+                style: {
+                  border: "1px solid rgba(239, 68, 68, 0.2)",
+                },
               },
             }}
           />
