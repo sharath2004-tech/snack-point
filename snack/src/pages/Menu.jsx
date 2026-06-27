@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { Search, X } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useSearchParams } from 'react-router-dom'
 import MenuCard from '../components/MenuCard'
@@ -20,14 +20,22 @@ export default function Menu() {
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState(searchParams.get('category') || 'All')
   const { setIsOpen, totalItems } = useCart()
+  const clientCache = useRef({})
 
   const fetchMenu = useCallback(async () => {
+    const cacheKey = `${activeCategory}:${search}`
+    if (clientCache.current[cacheKey]) {
+      setItems(clientCache.current[cacheKey])
+      setLoading(false)
+      return
+    }
     setLoading(true)
     try {
       const params = {}
       if (activeCategory !== 'All') params.category = activeCategory
       if (search) params.search = search
       const res = await api.get('/menu', { params })
+      clientCache.current[cacheKey] = res.data
       setItems(res.data)
     } catch (err) {
       toast.error('Failed to load menu')

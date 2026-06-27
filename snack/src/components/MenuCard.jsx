@@ -106,6 +106,7 @@ export default function MenuCard({ item }) {
               alt={item.name}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               loading="lazy"
+              decoding="async"
             />
           ) : (
             <div className="w-full h-full min-h-[110px] flex items-center justify-center text-4xl bg-blue-100">
@@ -144,6 +145,7 @@ export default function MenuCard({ item }) {
               alt={item.name}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               loading="lazy"
+              decoding="async"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-5xl bg-blue-100">

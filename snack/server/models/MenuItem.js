@@ -44,4 +44,9 @@ const menuItemSchema = new mongoose.Schema({
   },
 }, { timestamps: true })
 
+// Compound index for common query: filter by availability + category, sort by name
+menuItemSchema.index({ availableToday: 1, category: 1, name: 1 })
+// Index for name search (regex queries benefit from this for prefix searches)
+menuItemSchema.index({ name: 1 })
+
 module.exports = mongoose.model('MenuItem', menuItemSchema)
